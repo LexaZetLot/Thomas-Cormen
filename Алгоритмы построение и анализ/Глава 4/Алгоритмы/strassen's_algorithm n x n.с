@@ -1,160 +1,156 @@
-#include stdio.h
-#include stdlib.h
+#include <stdio.h>
+#include <stdlib.h>
 
 #define SIZE_MATRIX 4
 
-void sum_matrix (int  a, int  b, int  c, int N, int sub_size);
-void sub_matrix (int  a, int  b, int  c, int N, int sub_size);
-void recording_subarry (int  a, int  b, int N, int sub_size);
-int square_matrix_multiply_recursive (int  arr_a, int  arr_b, int  arr_c, int N);
+void sum_matrix (int * a, int * b, int * c, int N, int sub_size);
+void sub_matrix (int * a, int * b, int * c, int N, int sub_size);
+void recording_subarry (int * a, int * b, int N, int sub_size);
+void square_matrix_multiply_recursive (int * arr_a, int * arr_b, int * arr_c, int N);
 
 int main()
 {
-    int  arr_a = (int) calloc (SIZE_MATRIX  SIZE_MATRIX, sizeof (int));
-    
-    for (int i = 0; i  SIZE_MATRIX; i++)
-        for (int j = 0; j  SIZE_MATRIX; j++)
-            arr_a [i  SIZE_MATRIX + j] = i + j;
-    for (int i = 0; i  SIZE_MATRIX; i++)
+    int * arr_a = (int *) calloc (SIZE_MATRIX * SIZE_MATRIX, sizeof (int));
+    for (int i = 0; i < SIZE_MATRIX; i++)
+        for (int j = 0; j < SIZE_MATRIX; j++)
+            arr_a [i * SIZE_MATRIX + j] = i + j;
+    for (int i = 0; i < SIZE_MATRIX; i++)
     {
-        for (int j = 0; j  SIZE_MATRIX; j++)
-            printf (%d , arr_a [i  SIZE_MATRIX + j]);
-        printf (n);
+        for (int j = 0; j < SIZE_MATRIX; j++)
+            printf ("%d ", arr_a [i * SIZE_MATRIX + j]);
+        printf ("\n");
     }
+    printf ("******************\n");
     
-    printf (n);
     
-    int  arr_b = (int) calloc (SIZE_MATRIX  SIZE_MATRIX, sizeof (int));
-    for (int i = 0; i  SIZE_MATRIX; i++)
-        for (int j = 0; j  SIZE_MATRIX; j++)
-            arr_b [i  SIZE_MATRIX + j] = i + j;
-    for (int i = 0; i  SIZE_MATRIX; i++)
+    int * arr_b = (int *) calloc (SIZE_MATRIX * SIZE_MATRIX, sizeof (int));
+    for (int i = 0; i < SIZE_MATRIX; i++)
+        for (int j = 0; j < SIZE_MATRIX; j++)
+            arr_b [i * SIZE_MATRIX + j] = i + j;
+    for (int i = 0; i < SIZE_MATRIX; i++)
     {
-        for (int j = 0; j  SIZE_MATRIX; j++)
-            printf (%d , arr_b [i  SIZE_MATRIX + j]);
-        printf (n);
+        for (int j = 0; j < SIZE_MATRIX; j++)
+            printf ("%d ", arr_b [i * SIZE_MATRIX + j]);
+        printf ("\n");
     }
-    printf (n);
+    printf ("******************\n");
     
-    int  arr_c = (int) calloc (SIZE_MATRIX  SIZE_MATRIX, sizeof (int));
-    sum_matrix (&((arr_a + (0  (SIZE_MATRIX) + 0))), &((arr_a + (0  SIZE_MATRIX + (SIZE_MATRIX  2)))), arr_c, SIZE_MATRIX, SIZE_MATRIX  2);
-    recording_subarry (&((arr_c + ((SIZE_MATRIX  2)  SIZE_MATRIX + (SIZE_MATRIX  2)))), &((arr_a + (0  SIZE_MATRIX + (SIZE_MATRIX  2)))), SIZE_MATRIX, SIZE_MATRIX  2);
-    for (int i = 0; i  SIZE_MATRIX; i++)
+    int * arr_c = (int *) calloc (SIZE_MATRIX * SIZE_MATRIX, sizeof (int));
+    square_matrix_multiply_recursive (arr_a, arr_b, arr_c, SIZE_MATRIX * SIZE_MATRIX);
+    
+    for (int i = 0; i < SIZE_MATRIX; i++)
     {
-        for (int j = 0; j  SIZE_MATRIX; j++)
-            printf (%d , arr_c [i  SIZE_MATRIX + j]);
-        printf (n);
+        for (int j = 0; j < SIZE_MATRIX; j++)
+            printf ("%d ", arr_c [i * SIZE_MATRIX + j]);
+        printf ("\n");
     }
 
     return 0;
 }
 
-int square_matrix_multiply_recursive (int  arr_a, int  arr_b, int  arr_c, int N)
+void square_matrix_multiply_recursive (int * arr_a, int * arr_b, int * arr_c, int N)
 {
     if (N == 1)
-    {
-        int bufer;
-        bufer = (arr_b)  (arr_a);
-        return bufer;
-    }
+        (* arr_c) = (* arr_b) * (* arr_a);
     else 
     {
-        int  D_0 = (int) calloc (N, sizeof (int));
-        int  D_1 = (int) calloc (N, sizeof (int));
-        int  D_2 = (int) calloc (N, sizeof (int));
-        int  H_0 = (int) calloc (N, sizeof (int));
-        int  H_1 = (int) calloc (N, sizeof (int));
-        int  V_0 = (int) calloc (N, sizeof (int));
-        int  V_1 = (int) calloc (N, sizeof (int));
-        int  BUFER_0 = (int) calloc (N, sizeof (int));
-        int  BUFER_1 = (int) calloc (N, sizeof (int));
-        int  BUFER_2 = (int) calloc (N, sizeof (int));
-        int  BUFER_3 = (int) calloc (N, sizeof (int));
+        int * D_0 = (int *) calloc (N / 4, sizeof (int));
+        int * D_1 = (int *) calloc (N / 4, sizeof (int));
+        int * D_2 = (int *) calloc (N / 4, sizeof (int));
+        int * H_0 = (int *) calloc (N / 4, sizeof (int));
+        int * H_1 = (int *) calloc (N / 4, sizeof (int));
+        int * V_0 = (int *) calloc (N / 4, sizeof (int));
+        int * V_1 = (int *) calloc (N / 4, sizeof (int));
+        int * BUFER_0 = (int *) calloc (N / 4, sizeof (int));
+        int * BUFER_1 = (int *) calloc (N / 4, sizeof (int));
+        int * BUFER_2 = (int *) calloc (N / 4, sizeof (int));
+        int * BUFER_3 = (int *) calloc (N / 4, sizeof (int));
         
-        D_0                                                                                                                                                   
-        sum_matrix (&((arr_a + (0  (N  2) + 0))), &((arr_a + ((N  2)  N + (N  2)))), BUFER_0, N, N  2);
-        sum_matrix (&((arr_b + (0  (N  2) + 0))), &((arr_b + ((N  2)  N + (N  2)))), BUFER_1, N, N  2);
-        square_matrix_multiply_recursive (BUFER_0, BUFER_1, D_0, N  2);
+        //D_0                                                                                                                                                   
+        sum_matrix (&(*(arr_a + (0 * (N / 4) + 0))), &(*(arr_a + ((N / 4) * N + (N / 4)))), BUFER_0, N, N / 4);
+        sum_matrix (&(*(arr_b + (0 * (N / 4) + 0))), &(*(arr_b + ((N / 4) * N + (N / 4)))), BUFER_1, N, N / 4);
+        square_matrix_multiply_recursive (BUFER_0, BUFER_1, D_0, N / 4);
         
-        D_1                                                                                                                                                   
-        sub_matrix (&((arr_a + ((N  2)  N + 0))), &((arr_a + ((N  2)  N + (N  2)))), BUFER_0, N, N  2);
-        sum_matrix (&((arr_b + (0  N + (N  2)))), &((arr_b + ((N  2)  N + (N  2)))), BUFER_1, N, N  2);
-        square_matrix_multiply_recursive (BUFER_0, BUFER_1, D_1, N  2);
+        //D_1                                                                                                                                                   
+        sub_matrix (&(*(arr_a + (0 * N + (N / 4)))), &(*(arr_a + ((N / 4) * N + (N / 4)))), BUFER_0, N, N / 4);
+        sum_matrix (&(*(arr_b + ((N / 4) * N + 0))), &(*(arr_b + ((N / 4) * N + (N / 4)))), BUFER_1, N, N / 4);
+        square_matrix_multiply_recursive (BUFER_0, BUFER_1, D_1, N / 4);
         
-        D_2                                                                                                                                                   
-        sub_matrix (&((arr_a + ((N  2)  N + 0))), &((arr_a + (0  N + 0))), BUFER_0, N, N  2);
-        sum_matrix (&((arr_b + (0  N + 0))), &((arr_b + (0  N + (N  2)))), BUFER_1, N, N  2);
-        square_matrix_multiply_recursive (BUFER_0, BUFER_1, D_2, N  2);
+        //D_2                                                                                                                                                   
+        sub_matrix (&(*(arr_a + ((N / 4) * N + 0))), &(*(arr_a + (0 * N + 0))), BUFER_0, N, N / 4);
+        sum_matrix (&(*(arr_b + (0 * N + 0))), &(*(arr_b + (0 * N + (N / 4)))), BUFER_1, N, N / 4);
+        square_matrix_multiply_recursive (BUFER_0, BUFER_1, D_2, N / 4);
         
-        H_0                                                                                                                                                   
-        sum_matrix (&((arr_a + (0  N + 0))), &((arr_a + (0  N + (N  2)))), BUFER_0, N, N  2);
-        recording_subarry (BUFER_1, &((arr_b + ((N  2)  N + (N  2)))), N, N  2);
-        square_matrix_multiply_recursive (BUFER_0, BUFER_1, H_0, N  2);
+        //H_0                                                                                                                                                   
+        sum_matrix (&(*(arr_a + (0 * N + 0))), &(*(arr_a + (0 * N + (N / 4)))), BUFER_0, N, N / 4);
+        recording_subarry (BUFER_1, &(*(arr_b + ((N / 4) * N + (N / 4)))), N, N / 4);
+        square_matrix_multiply_recursive (BUFER_0, BUFER_1, H_0, N / 4);
         
-        H_1                                                                                                                                                   
-        sum_matrix (&((arr_a + ((N  2)  N + 0))), &((arr_a + ((N  2)  N + (N  2)))), BUFER_0, N, N  2);
-        recording_subarry (BUFER_1, &((arr_b + (0  N + 0))), N, N  2);
-        square_matrix_multiply_recursive (BUFER_0, BUFER_1, H_1, N  2);
+        //H_1                                                                                                                                                   
+        sum_matrix (&(*(arr_a + ((N / 4) * N + 0))), &(*(arr_a + ((N / 4) * N + (N / 4)))), BUFER_0, N, N / 4);
+        recording_subarry (BUFER_1, &(*(arr_b + (0 * N + 0))), N, N / 4);
+        square_matrix_multiply_recursive (BUFER_0, BUFER_1, H_1, N / 4);
         
-        V_0                                                                                                                                                   
-        sub_matrix (&((arr_b + ((N  2)  N + 0))), &((arr_b + ((N  2)  N + (N  2)))), BUFER_0, N, N  2);
-        recording_subarry (BUFER_1, &((arr_a + ((N  2)  N + (N  2)))), N, N  2);
-        square_matrix_multiply_recursive (BUFER_0, BUFER_1, V_0, N  2);
+        //V_0                                                                                                                                                   
+        sub_matrix (&(*(arr_b + ((N / 4) * N + 0))), &(*(arr_b + 0 * N + 0)), BUFER_0, N, N / 4);
+        recording_subarry (BUFER_1, &(*(arr_a + ((N / 4) * N + (N / 4)))), N, N / 4);
+        square_matrix_multiply_recursive (BUFER_1, BUFER_0, V_0, N / 4);
         
-        V_1                                                                                                                                                   
-        sub_matrix (&((arr_b + (0  N + (N  2)))), &((arr_b + ((N  2)  N + (N  2)))), BUFER_0, N, N  2);
-        recording_subarry (BUFER_1, &((arr_a + (0  N + 0))), N, N  2);
-        square_matrix_multiply_recursive (BUFER_0, BUFER_1, V_1, N  2);
+        //V_1                                                                                                                                                   
+        sub_matrix (&(*(arr_b + (0 * N + (N / 4)))), &(*(arr_b + ((N / 4) * N + (N / 4)))), BUFER_0, N, N / 4);
+        recording_subarry (BUFER_1, &(*(arr_a + (0 * N + 0))), N, N / 4);
+        square_matrix_multiply_recursive (BUFER_1, BUFER_0, V_1, N / 4);
         
         
-         1                                                                                                                                                    
-        sum_matrix (D_0, D_1, BUFER_1, N, N  2);
-        sub_matrix (V_0, H_0, BUFER_2, N, N  2);
-        sum_matrix (BUFER_1, BUFER_2, BUFER_0, N, N  2);
+        //1                                                                                                                                                    
+        sum_matrix (D_0, D_1, BUFER_1, N, N / 4);
+        sub_matrix (V_0, H_0, BUFER_2, N, N / 4);
+        sum_matrix (BUFER_1, BUFER_2, BUFER_0, N, N / 4);
         
-        4                                                                                                                                                     
-        sum_matrix (D_0, D_2, BUFER_1, N, N  2);
-        sub_matrix (V_1, H_1, BUFER_2, N, N  2);
-        sum_matrix (BUFER_1, BUFER_2, BUFER_3, N, N  2);
+        //4                                                                                                                                                     
+        sum_matrix (D_0, D_2, BUFER_1, N, N / 4);
+        sub_matrix (V_1, H_1, BUFER_2, N, N / 4);
+        sum_matrix (BUFER_1, BUFER_2, BUFER_3, N, N / 4);
         
-        2                                                                                                                                                     
-        sum_matrix (V_1, H_0, BUFER_1, N, N  2);
+        //2                                                                                                                                                     
+        sum_matrix (V_1, H_0, BUFER_1, N, N / 4);
         
-        3                                                                                                                                                     
-        sum_matrix (V_0, H_1, BUFER_2, N, N  2);
+        //3                                                                                                                                                     
+        sum_matrix (V_0, H_1, BUFER_2, N, N / 4);
+        
+        
     }
-    return 1;
 }
 
-void sum_matrix (int  a, int  b, int  c, int N, int sub_size)
+void sum_matrix (int * a, int * b, int * c, int N, int sub_size)
 {
-    for (int i = 0; i  sub_size; i++)
-        for (int j = 0; j  sub_size; j++)
+    for (int i = 0; i < sub_size; i++)
+        for (int j = 0; j < sub_size; j++)
         {
-            ((c + (i  N + j))) = ((a + (i  N + j))) + ((b + (i  N + j)));
-            printf (%d  %d  %d  %d  %d, ((c + (i  N + j))), ((a + (i  N + j))), ((b + (i  N + j))), i , j);
-            getchar ();
+            (*(c + (i * N + j))) = (*(a + (i * N + j))) + (*(b + (i * N + j)));
+            //printf (%d  %d  %d  %d  %d, ((c + (i  N + j))), ((a + (i  N + j))), ((b + (i  N + j))), i , j);
+            //getchar ();
         }
 }
 
-void sub_matrix (int  a, int  b, int  c, int N, int sub_size)
+void sub_matrix (int * a, int * b, int * c, int N, int sub_size)
 {
-    for (int i = 0; i  sub_size; i++)
-        for (int j = 0; j  sub_size; j++)
+    for (int i = 0; i < sub_size; i++)
+        for (int j = 0; j < sub_size; j++)
         {
-            ((c + (i  N + j))) = ((a + (i  N + j))) - ((b + (i  N + j)));
-            printf (%d  %d  %d  %d  %d, ((c + (i  N + j))), ((a + (i  N + j))), ((b + (i  N + j))), i , j);
-            getchar ();
+            (*(c + (i * N + j))) = (*(a + (i * N + j))) - (*(b + (i * N + j)));
+            //printf (%d  %d  %d  %d  %d, ((c + (i  N + j))), ((a + (i  N + j))), ((b + (i  N + j))), i , j);
+            //getchar ();
         }
 }
 
-void recording_subarry (int  a, int  b, int N, int sub_size)
+void recording_subarry (int * a, int * b, int N, int sub_size)
 {
-    for (int i = 0; i  sub_size; i++)
-        for (int j = 0; j  sub_size; j++)
+    for (int i = 0; i < sub_size; i++)
+        for (int j = 0; j < sub_size; j++)
         {
-            ((a + (i  N + j))) = ((b + (i  N + j)));
-            printf (%d  %d  %d  %d, ((a + (i  N + j))), ((b + (i  N + j))), i , j);
-            getchar ();
+            (*(a + (i * N + j))) = (*(b + (i * N + j)));
+            //printf (%d  %d  %d  %d, ((a + (i  N + j))), ((b + (i  N + j))), i , j);
+            //getchar ();
         }
 }

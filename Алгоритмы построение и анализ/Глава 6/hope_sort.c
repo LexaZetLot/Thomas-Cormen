@@ -23,8 +23,8 @@ int main(void)
 void max_haep_recursion(int* arr, int root, int size)
 {
 	int max_number = root;
-	int left = 2 * root;
-	int right = 2 * root + 1;
+	int left = 2 * root + 1;
+	int right = 2 * root + 2;
 	int bufer;
 
 	if (left < size && arr[left] > arr[max_number])
@@ -45,8 +45,8 @@ void max_haep_recursion(int* arr, int root, int size)
 void min_haep_recursion(int* arr, int root, int size)
 {
 	int min_number = root;
-	int left = 2 * root;
-	int right = 2 * root + 1;
+	int left = 2 * root + 1;
+	int right = 2 * root + 2;
 	int bufer;
 
 	if (left < size && arr[left] < arr[min_number])

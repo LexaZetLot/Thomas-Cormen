@@ -12,8 +12,8 @@ struct hope_list
 
 struct hope_list heap_maximum(struct hope_list* list, int size);
 struct hope_list heap_minimum(struct hope_list* list, int size);
-struct hope_list heap_extract_max(struct hope_list* list, int size);
-struct hope_list heap_extract_min(struct hope_list* list, int size);
+struct hope_list heap_extract_max(struct hope_list* list, struct hope_list* bufer, int size);
+struct hope_list heap_extract_min(struct hope_list* list, struct hope_list* bufer, int size);
 struct hope_list* max_heap_insert(struct hope_list* list, int key, int size);
 struct hope_list* delete_heap_node(struct hope_list* list, int index, int size);
 struct hope_list* two_heap_integration(struct hope_list* list1, struct hope_list* list2, int size1, int size2);
@@ -132,30 +132,28 @@ void min_haep_recursion(struct hope_list* list, int root, int size)
 	}
 }
 
-struct hope_list heap_extract_max(struct hope_list* list, int size)
+struct hope_list* heap_extract_max(struct hope_list* list, struct hope_list* bufer, int size)
 {
-	struct hope_list bufer;
 	if (size <= 1)
 		exit(0);
 
 	heap_sort_max_min(list, size);
-	bufer = list[size - 1];
+	*bufer = list[size - 1];
 	list = (struct hope_list*)realloc(list, (size - 1) * sizeof(struct hope_list));
 	max_haep_recursion(list, 0, size - 1);
-	return bufer;
+	return list;
 }
 
-struct hope_list heap_extract_min(struct hope_list* list, int size)
+struct hope_list* heap_extract_min(struct hope_list* list, struct hope_list* bufer, int size)
 {
-	struct hope_list bufer;
 	if (size <= 1)
 		exit(0);
 
 	heap_sort_min_max(list, size);
-	bufer = list[size - 1];
+	*bufer = list[size - 1];
 	list = (struct hope_list*)realloc(list, (size - 1) * sizeof(struct hope_list));
 	max_haep_recursion(list, 0, size - 1);
-	return bufer;
+	return list;
 }
 
 void heap_increase_key(struct hope_list* list, int index, int key, int size)

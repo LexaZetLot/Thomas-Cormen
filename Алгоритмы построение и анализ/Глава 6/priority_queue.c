@@ -12,8 +12,8 @@ struct hope_list
 
 struct hope_list heap_maximum(struct hope_list* list, int size);
 struct hope_list heap_minimum(struct hope_list* list, int size);
-struct hope_list heap_extract_max(struct hope_list* list, struct hope_list* bufer, int size);
-struct hope_list heap_extract_min(struct hope_list* list, struct hope_list* bufer, int size);
+struct hope_list* heap_extract_max(struct hope_list* list, struct hope_list* bufer, int size);
+struct hope_list* heap_extract_min(struct hope_list* list, struct hope_list* bufer, int size);
 struct hope_list* max_heap_insert(struct hope_list* list, int key, int size);
 struct hope_list* delete_heap_node(struct hope_list* list, int index, int size);
 struct hope_list* two_heap_integration(struct hope_list* list1, struct hope_list* list2, int size1, int size2);

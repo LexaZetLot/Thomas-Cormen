@@ -37,11 +37,19 @@ void quicksotr(int* arr, int size)
 
 void quicksotr_recurion(int* arr, int low, int high)
 {
-	if (low < high)
+	while (low < high)
 	{
 		int pivot = partition(arr, low, high);
-		quicksotr_recurion(arr, low, pivot - 1);
-		quicksotr_recurion(arr, pivot + 1, high);
+		if (pivot - low < high - pivot)
+		{
+			quicksotr_recurion(arr, low, pivot - 1);
+			low = pivot + 1;
+		}
+		else
+		{
+			quicksotr_recurion(arr, pivot + 1, high);
+			high = pivot - 1;
+		}
 	}
 }
 

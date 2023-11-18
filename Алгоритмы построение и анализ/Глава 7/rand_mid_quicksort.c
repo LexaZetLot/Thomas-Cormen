@@ -4,6 +4,7 @@
 #define N 100
 
 void swap(int* x, int* y);
+int medium(int* arr, int i, int j, int k);
 void rand_quicksotr(int* arr, int size);
 void rand_quicksotr_recurion(int* arr, int low, int high);
 int rand_partition(int* arr, int low, int high);
@@ -24,9 +25,31 @@ int main(void)
 }
 void swap(int* x, int* y)
 {
+	if (x == y)
+		return;
 	int bufer = *x;
 	*x = *y;
 	*y = bufer;
+}
+
+int medium(int* arr, int i, int j, int k)
+{
+	int mid = i;
+	arr[i] > arr[j] && arr[i] < arr[k] ? mid = i : 0;
+	arr[i] < arr[j] && arr[i] > arr[k] ? mid = i : 0;
+	arr[j] > arr[i] && arr[j] < arr[k] ? mid = j : 0;
+	arr[j] < arr[i] && arr[j] > arr[k] ? mid = j : 0;
+	arr[k] > arr[j] && arr[k] < arr[i] ? mid = k : 0;
+	arr[k] < arr[j] && arr[k] > arr[i] ? mid = k : 0;
+
+	arr[i] == arr[j] && arr[i] > arr[k] ? mid = k : 0;
+	arr[i] == arr[j] && arr[i] < arr[k] ? mid = i : 0;
+	arr[i] == arr[k] && arr[i] > arr[j] ? mid = j : 0;
+	arr[i] == arr[j] && arr[i] < arr[k] ? mid = i : 0;
+	arr[k] == arr[j] && arr[k] > arr[i] ? mid = i : 0;
+	arr[k] == arr[j] && arr[i] < arr[k] ? mid = k : 0;
+
+	return mid;
 }
 
 void rand_quicksotr(int* arr, int size)
@@ -47,10 +70,14 @@ void rand_quicksotr_recurion(int* arr, int low, int high)
 
 int rand_partition(int* arr, int low, int high)
 {
-	int pivot_index;
-	pivot_index = low + (rand() % (high - low));
-	if (pivot_index != high)
-		swap(arr + pivot_index, arr + high);
+	if ((high - low) > 3)
+	{
+		int i, j, k;
+		i = low + (rand() % (high - low));
+		j = low + (rand() % (high - low));
+		k = low + (rand() % (high - low));
+		swap(arr + medium(arr, i, j, k), arr + high);
+	}
 
 	int pivot = arr[high];
 	int j = low;
